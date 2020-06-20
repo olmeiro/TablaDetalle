@@ -10,10 +10,16 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
 require_once('../../conexionProfe.php');
 require_once('../../Cliente/Modelo/Cliente.php');
 require_once('../../Cliente/Modelo/CrudCliente.php');
+require_once('../../Producto/Modelo/Producto.php');
+require_once('../../Producto/Modelo/CrudProducto.php');
 
 $Cliente = new Cliente(); // creal el objeto competencia
 $CrudCliente = new CrudCliente();
 $ListarClientes = $CrudCliente->ListarClientes();
+
+$Producto = new Producto();
+$CrudProducto = new CrudProducto();
+$ListarProductos = $CrudProducto->ListarProductos();
 
  ?>
 
@@ -45,8 +51,14 @@ $ListarClientes = $CrudCliente->ListarClientes();
       Producto:
       <select name="CodigoProducto" id="CodigoProducto">
         <option values="">Seleccione</option>
-        <option value="10">Arroz</option>
-        <option value="11">Panela</option>
+        <?php
+          foreach ($ListarProductos as $Producto)
+          {
+            ?>
+              <option value="<?php echo $Producto->getCodigoProducto();?>"><?php echo $Producto->getNombre();?></option>
+            <?php
+          }
+         ?>
       </select>
       <br>
       Precio:

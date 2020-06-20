@@ -4,7 +4,7 @@
       //Parámetros de entrada
       private $CodigoProducto; //talcual esta en BBDD
       //private $NombreProducto;
-      private $Cantidad;
+      private $Nombre;
       private $ValorUnitario;
 
       //definir constructor:
@@ -22,14 +22,14 @@
         return $this -> CodigoProducto;
       }
 
-      public function setCantidad($Cantidad)
+      public function setNombre($Nombre)
       {
-        $this ->Cantidad = $Cantidad;
+        $this ->Nombre = $Nombre;
       }
 
-      public function getCantidad()
+      public function getNombre()
       {
-        return $this -> Cantidad;
+        return $this -> Nombre;
       }
 
       public function setValorUnitario($ValorUnitario)

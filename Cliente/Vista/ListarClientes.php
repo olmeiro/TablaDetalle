@@ -9,10 +9,9 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
 }
 
 require_once('../../conexionProfe.php');
-require_once('../../Cliente/Modelo/Cliente.php');
-require_once('../../Cliente/Modelo/CrudCliente.php');
+require_once('../Modelo/Cliente.php');
+require_once('../Modelo/CrudCliente.php');
 
-$Cliente = new Cliente(); // creal el objeto competencia
 $CrudCliente = new CrudCliente();
 $ListarClientes = $CrudCliente->ListarClientes();
 
@@ -28,7 +27,7 @@ $ListarClientes = $CrudCliente->ListarClientes();
        <thead>
          <th>CodigoCliente</th>
          <th>Nombres</th>
-         <th>getApellidosCliente</th>
+         <th>Apellidos</th>
          <th>Dirección</th>
        </thead>
        <tbody>
@@ -41,6 +40,10 @@ $ListarClientes = $CrudCliente->ListarClientes();
                  <td><?php echo $Cliente->getNombreCliente()?></td>
                  <td><?php echo $Cliente->getApellidosCliente()?></td>
                  <td><?php echo $Cliente->getDireccionCliente()?></td>
+                 <td>
+                    <a href="EditarCliente.php?CodigoCliente=<?php echo $Cliente->getCodigoCliente();?>">Editar</a>
+                    <a href="../Controlador/ControladorCliente.php?CodigoCliente=<?php echo $Cliente->getCodigoCliente();?>&Accion=EliminarCliente">Eliminar</a>
+                  </td>
                </tr>
              <?php
            }

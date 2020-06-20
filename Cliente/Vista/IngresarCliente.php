@@ -8,8 +8,8 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
   header("Location:../../index.php");
 }
 
-require_once('../Modelo/Producto.php');
-$Producto = new Producto();
+require_once('../Modelo/Cliente.php');
+$Cliente = new Cliente();
  ?>
 
 
@@ -18,18 +18,19 @@ $Producto = new Producto();
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingresar Producto</title>
+    <title>Ingresar</title>
   </head>
   <body>
-    <h1 align="center">Ingresar Producto</h1>
-    <form id="frmIngresoProducto" action="../Controlador/ControladorProducto.php" method="post">
-      <!-- Codigo Producto: <input type="text" name="CodigoProducto" id="CodigoProducto"> -->
+    <h1 align="center">Ingresar Clientes</h1>
+    <form id="frmIngresoCliente" action="../Controlador/ControladorCliente.php" method="post">
+      <!-- Código Cliente: <input type="text" name="CodigoCliente" id="CodigoCliente"> -->
       <br>
-      Nombre Producto: <input type="text" name="NombreProducto" id="NombreProducto">
+      Nombre Cliente: <input type="text" name="NombreCliente" id="NombreCliente">
       <br>
-      Valor Unitario: <input type="text" name="ValorUnitario" id="ValorUnitario">
+      Apellido Cliente: <input type="text" name="ApellidosCliente" id="ApellidosCliente">
       <br>
-
+      Dirección Cliente: <input type="text" name="DireccionCliente" id="DireccionCliente">
+      <br>
       <input type="hidden" name="Registrar" id="Registrar" value="">
       <!-- //hidden para identificar que vista realiza la peticion -->
       <button type="submit" name="button">Ingresar</button>

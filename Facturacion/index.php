@@ -20,8 +20,12 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
       <table align="center">
         <thead>
           <tr>
-            <td><a href="Vista/IngresarFactura.php">Ingresar</a></td>
-            <td><a href="../Cliente/Vista/listarClientes.php">Listar</a></td>
+            <td><a href="Vista/IngresarFactura.php">Ingresar Factura</a></td>
+            <td><a href="Vista/listarFacturas.php">Listar Facturas</a></td>
+            <td><a href="../Cliente/Vista/IngresarCliente.php">Ingresar Cliente</a></td>
+            <td><a href="../Cliente/Vista/ListarClientes.php">Listar Cliente</a> </td>
+            <td><a href="../Producto/Vista/IngresarProductos.php">Ingresar Producto</a></td>
+            <td><a href="../Producto/Vista/ListarProductos.php">Listar Productos</a></td>
           </tr>
         </thead>
         <tbody>

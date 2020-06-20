@@ -41,6 +41,17 @@ if(isset($_POST["Acceder"]))//Validar que se realiza la peticion de acceder
 
 
 }
+else if(isset($_POST['Registrar']))
+{
+  echo "Registrar";
+  //$Usuario-> setIdUsuario($_POST["IdUsuario"]);
+  $Usuario-> setNombreUsuario($_POST["NombreUsuario"]);
+  $Usuario-> setContrasena($_POST["Contrasena"]);
+  $Usuario-> setIdRol($_POST['IdRol']);
+  $Usuario-> setIdEstado($_POST['IdEstado']);
+
+  $CrudUsuario::InsertarUsuario($Usuario); //llamar el metodo Insertar
+}
 else //En caso contrario envio al login
 {
     header("Location:../../index.php");

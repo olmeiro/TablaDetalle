@@ -20,17 +20,20 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
     <title>Ingresar</title>
   </head>
   <body>
-    <h1 align="center">Ingresar productos</h1>
-    <form class="" action="../Controlador/ControladorProducto.php" method="post">
-      Código producto: <input type="text" name="CodigoCompetencia" id="CodigoCompetencia" value="">
-      <br>
-      Cantidad: <input type="text" name="NombreCompetencia" id="NombreCompetencia" value="">
-      <br>
-      ValorUnitario: <input type="text" name="NombreCompetencia" id="NombreCompetencia" value="">
-      <br>
-      <input type="hidden" name="Registrar" id="Registrar" value="">
-      <!-- //hidden para identificar que vista realiza la peticion -->
-      <button type="submit" name="button">Registrar</button>
-    </form>
+
   </body>
 </html>
+
+
+<!-- <h1 align="center">Ingresar productos</h1>
+<form class="" action="../Controlador/ControladorProducto.php" method="post">
+  Código producto: <input type="text" name="CodigoCompetencia" id="CodigoCompetencia" value="">
+  <br>
+  Cantidad: <input type="text" name="NombreCompetencia" id="NombreCompetencia" value="">
+  <br>
+  ValorUnitario: <input type="text" name="NombreCompetencia" id="NombreCompetencia" value="">
+  <br>
+  <input type="hidden" name="Registrar" id="Registrar" value="">
+  <! //hidden para identificar que vista realiza la peticion -->
+  <!-- <button type="submit" name="button">Registrar</button>
+</form> --> -->

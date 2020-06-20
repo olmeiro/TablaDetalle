@@ -6,6 +6,7 @@ class DetalleFactura
   private $CodigoProducto;
   private $Cantidad;
   private $ValorUnitario;
+  private $ValorTotal;
 
   public function __construct(){}
 
@@ -58,6 +59,17 @@ class DetalleFactura
   {
     return $this->ValorUnitario;
   }
+
+  public function setValorTotal($ValorTotal)
+  {
+    $this->ValorTotal = $ValorTotal;
+  }
+
+  public function getValorTotal()
+  {
+    return $this->ValorTotal;
+  }
+
 
 }
 

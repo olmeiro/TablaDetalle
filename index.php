@@ -11,7 +11,7 @@
     <form class="" action="Usuario/Controlador/ControladorUsuario.php" method="post">
       Usuario: <input type="text" name="NombreUsuario" id="NombreUsuario" value="">
       <br>
-      Contraseña: <input type="text" name="Contrasena" id="Contrasena" value="">
+      Contraseña: <input type="password" name="Contrasena" id="Contrasena" value="">
       <br>
       <!-- <input type="hidden" name="Acceder" id="Acceder" value=""> -->
       <!-- //hidden para identificar que vista realiza la peticion -->

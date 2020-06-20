@@ -7,8 +7,8 @@
     {
       $Db = Db::Conectar();
       $Sql = $Db->prepare('SELECT * FROM usuarios WHERE NombreUsuario =:NombreUsuario AND Contrasena =:Contrasena AND IdEstado=1');
-      $Sql->bindValue('NombreUsuario', $Usuario->getNombreUsuario());
-      $Sql->bindValue('Contrasena', $Usuario->getContrasena());
+      $Sql->bindValue('NombreUsuario',$Usuario->getNombreUsuario());
+      $Sql->bindValue('Contrasena', $Usuario->getContrasena()); //contraseña encripta con md5
 
       $Sql->execute(); //Ejecutar la consulta, execute() es de la libreria PDO,
 
@@ -27,7 +27,6 @@
       {
         $MiUsuario->setExiste(0);
       }
-
       return $MiUsuario;
     }
   }

@@ -1,87 +1,66 @@
-<!-- Controla las peticiones enviadas desde los formularios -->
-
 <?php
 
 session_start();
 
-if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar al login:
-{
-  //redireccionar al al login:
-  header("Location:../../index.php");
+if (!(isset($_SESSION["NombreUsuario"]))) {
+ header("location:../../Index.php");
 }
 
+require_once('../../ConexionProfe.php');
+require_once('../Modelo/Factura.php');// vincular la clase
+require_once('../Modelo/DetalleFactura.php');
+require_once('../Modelo/CrudFactura.php');
+require_once('../Modelo/CrudDetalleFactura.php');
+require_once('../../Cliente/Modelo/Cliente.php');
+require_once('../../Cliente/Modelo/CrudCliente.php');
 
-  require_once('../../conexionProfe.php');
-  require_once('../Modelo/Factura.php'); //Vincular la clase competencia
-  require_once('../Modelo/DetalleFactura.php');
-  require_once('../Modelo/CrudFactura.php'); //Vincular la clase Crud
-  require_once('../Modelo/CrudDetalleFactura.php');
-  // echo "Controlador";
 
+$Factura = new Factura(); // creal el objeto competencia
+$CrudFactura = new CrudFactura();
+$DetalleFactura = new DetalleFactura();
+$CrudDetalleFactura = new CrudDetalleFactura();
 
-    $Factura = new Factura();
-    $DetalleFactura = new DetalleFactura();
-    $CrudFactura = new CrudFactura();
-    $CrudDetalleFactura = new CrudDetalleFactura();
-
-    //echo $CodigoFacturaGenerado;
-
-    if (isset($_POST["Registrar"]))
-    {
-      $Factura->setCodigoCliente($_POST['CodigoCliente']);
-      $CodigoFacturaGenerado=$CrudFactura::InsertarFactura($Factura);
-
-    if($CodigoFacturaGenerado>-1)
-    {
-      for($ConsecutivoProducto=1;$ConsecutivoProducto<=$_POST['ProductosAgregados'];$ConsecutivoProducto++)
-      {
-        $CodigoProducto = "CodigoProducto".$ConsecutivoProducto; //undestood
-        if(isset($_POST[$CodigoProducto]))
-        {
-          $Cantidad = "CantidadProducto".$ConsecutivoProducto;
-          $ValorUnitario = "PrecioProducto".$ConsecutivoProducto;
-          $DetalleFactura->setCodigoFactura($CodigoFacturaGenerado);
-          $DetalleFactura->setCodigoProducto($_POST['$CodigoProducto']);
-          $DetalleFactura->setCantidad($_POST['$Cantidad']);
-          $DetalleFactura->setValorUnitario($_POST['$ValorUnitario']);
-          $CrudDetalleFactura::InsertarDetalleFactura($DetalleFactura);
-        }
-      }
-      echo "Registro exitoso controlador";
-    }
-
-  }
+//echo $CodigoFacturaGenerado;
 
 
 
+if (isset($_POST["Registrar"])){// si lapeticion se registra
 
-  // if (isset($_POST["Registrar"])) //verifica si la peticion es de registrar
-  // {
-  //   echo "Registrar";
-  //   $Factura-> setCodigoFactura($_POST["CodigoFactura"]); //instanciar los atributos
-  //   $Factura-> setCodigoCliente($_POST["CodigoCliente"]);
-  //   $Factura->setFechaFactura($_POST['FechaFactura']);
-  //
-  //   echo $(); //Se verifica instanciacion.
-  //   echo $Competencia->getNombreCompetencia();
-  //
-  //   $CrudCompetencia::InsertarCompetencia($Competencia); //llamar el metodo Insertar
-  // }
-  // else if (isset($_POST["Modificar"])) //verifica si la peticion es de registrar
-  // {
-  //   // echo "Modificar";
-  //   $Competencia-> setCodigoCompetencia($_POST["CodigoCompetencia"]); //instanciar los atributos
-  //   $Competencia-> setNombreCompetencia($_POST["NombreCompetencia"]);
-  //
-  //   $CrudCompetencia::ModificarCompetencia($Competencia); //llamar el metodo modificar
-  // }
-  //
-  // else if ($_GET['Accion']=="EliminarCompetencia")
-  // {
-  //   $CrudCompetencia::EliminarCompetencia($_GET["CodigoCompetencia"]);//Llamar al metodo eliminar
-  //   //echo "En desarrollo";
-  //   //echo $_GET["CodigoCompetencia"];
-  //
-  // }
-  //
- ?>
+     $Factura->setCodigoCliente($_POST["CodigoCliente"]);
+     $CodigoFacturaGenerado=$CrudFactura::InsertarFactura($Factura);
+
+     if($CodigoFacturaGenerado>-1){
+
+          $ProductosAgregar = $_POST["ProductosAgregados"];
+          $RegistroExitoso = 0;
+
+          for($ConsecutivoProducto=1;$ConsecutivoProducto<=$ProductosAgregar;$ConsecutivoProducto++)
+          {
+               $DetalleFactura->setCodigoFactura($CodigoFacturaGenerado);
+               $CodigoProducto = "CodigoProducto".$ConsecutivoProducto;
+               if(isset($_POST[$CodigoProducto]))
+               {
+
+                    $DetalleFactura->setCodigoProducto($_POST[$CodigoProducto]);
+                    $CantidadProducto = "CantidadProducto".$ConsecutivoProducto;
+                    $DetalleFactura->setCantidad($_POST[$CantidadProducto]);
+                    $PrecioProducto= "PrecioProducto".$ConsecutivoProducto;
+                    $DetalleFactura->setValorUnitario($_POST[$PrecioProducto]);
+                    $ValorDetalle = "ValorDetalle".$ConsecutivoProducto;
+                    $DetalleFactura->setValorTotal($_POST[$CantidadProducto]*$_POST[$PrecioProducto]);
+
+                    $RegistroExitoso =$CrudDetalleFactura::InsertarDetalleFactura($DetalleFactura);
+               }
+          }
+          if ($RegistroExitoso==1) {
+               echo "Registro Detalle exitoso";
+          }
+          else
+          {
+               echo " Error en el Registro";
+          }
+
+     }
+}
+
+?>

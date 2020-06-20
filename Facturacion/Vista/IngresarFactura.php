@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar al login:
@@ -7,6 +6,15 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
   //redireccionar al al login:
   header("Location:../../index.php");
 }
+
+require_once('../../conexionProfe.php');
+require_once('../../Cliente/Modelo/Cliente.php');
+require_once('../../Cliente/Modelo/CrudCliente.php');
+
+$Cliente = new Cliente(); // creal el objeto competencia
+$CrudCliente = new CrudCliente();
+$ListarClientes = $CrudCliente->ListarClientes();
+
  ?>
 
 <!DOCTYPE html>
@@ -24,8 +32,14 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
     Cliente:
       <select name="CodigoCliente" id="CodigoCliente">
         <option value="">Seleccione</option>
-        <option value="1206">Alejandro Guerrero</option>
-        <option value="1111">Nilton Ospina</option>
+        <?php
+          foreach ($ListarClientes as $Cliente)
+          {
+            ?>
+              <option value="<?php echo $Cliente->getCodigoCliente();?>"><?php echo $Cliente->getCodigoCliente()."-".$Cliente->getNombreCliente()."-".$Cliente->getApellidosCliente();?></option>
+            <?php
+          }
+         ?>
       </select>
       <br>
       Producto:
@@ -45,7 +59,7 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
       <br>
       <input type="hidden" name="Registrar" id="Registrar" value="">
       <!-- //hidden para identificar que vista realiza la peticion -->
-      <button type="submit" name="button">Registrar</button>
+      <button type="submit">Registrar</button>
       <br>
       <table id="ListaProductos" border="2">
       <thead>
@@ -53,7 +67,7 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
         <th>Codigo Producto</th>
         <th>Cantidad</th>
         <th>Precio</th>
-        <th>Valor total</th>
+        <th>Valor Detalle</th>
         <th></th>
       </thead>
       <tbody>
@@ -62,6 +76,10 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
       </table>
       <input type="text" id="ProductosAgregados" name="ProductosAgregados" value="0">
     </form>
+    <br>
+    <div align="center">
+    <button><a href="../Index.php">Volver</a></button>
+    </div>
   </body>
   <script>
     function AgregarDetalle()
@@ -76,22 +94,25 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
       $('#ProductosAgregados').val(parseInt($('#ProductosAgregados').val()) + 1 );
       let ConsecutivoProducto = $("#ProductosAgregados").val();
 
-      let htmlTags = '<tr>' +
+      let htmlTags = '<tr id="'+ConsecutivoProducto+'">' +
         '<td>'+ NombreProducto + '</td>'+
-        '<td>'+ '<input type="text" id="CodigoProducto '+ ConsecutivoProducto +'" name="CodigoProducto '+ ConsecutivoProducto +'" value="'+CodigoProducto+'">' + '</td>'+
-        '<td>'+ '<input type="text" id="CantidadProducto '+ ConsecutivoProducto +'" name="CantidadProducto '+ ConsecutivoProducto +'" value="'+CantidadProducto+'">' + '</td>'+
-        '<td>'+ '<input type="text" id="PrecioProducto '+ ConsecutivoProducto +'" name="PrecioProducto '+ ConsecutivoProducto +'" value="'+PrecioProducto+'">' + '</td>'+
-        '<td>'+ '<input type="text" id="ValorDetalle '+ ConsecutivoProducto +'" name="ValorDetalle'+ ConsecutivoProducto +'" value="'+ValorDetalle+'">' + '</td>'+
-        '<td>'+ '<button type="button" onclick="EliminarDetalle('+ ConsecutivoProducto +')">Eliminar</button>' + '</td>'+
+        '<td>'+ '<input type="text" id="CodigoProducto'+ConsecutivoProducto+'"name="CodigoProducto'+ConsecutivoProducto+'" value="'+CodigoProducto+'">' + '</td>'+
+        '<td>'+ '<input type="text" id="CantidadProducto'+ConsecutivoProducto+'"name="CantidadProducto'+ConsecutivoProducto+'" value="'+CantidadProducto+'">' + '</td>'+
+        '<td>'+ '<input type="text" id="PrecioProducto'+ConsecutivoProducto+'"name="PrecioProducto'+ConsecutivoProducto+'" value="'+PrecioProducto+'">' + '</td>'+
+        '<td>'+ '<input type="text" id="ValorDetalle'+ConsecutivoProducto+'"name="ValorDetalle'+ConsecutivoProducto+'" value="'+ValorDetalle+'">' + '</td>'+
+        '<td>'+ '<button type="button" class="borrar">Eliminar</button>' + '</td>'+
         '</tr>';
 
       $('#ListaProductos tbody').append(htmlTags);
 
     }
 
-    function EliminarDetalle(ConsecutivoProducto)
-    {
-      alert("hola mundo" + ConsecutivoProducto);
-    }
+    $(function (){
+      $(document).on('click','.borrar',function(event){
+        event.preventDefault();
+        $(this).closest('tr').remove();
+      });
+    });
+
     </script>
 </html>

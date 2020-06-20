@@ -21,7 +21,7 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
         <thead>
           <tr>
             <td><a href="Vista/IngresarFactura.php">Ingresar</a></td>
-            <td><a href="Vista/listarFacturas.php">Listar</a></td>
+            <td><a href="../Cliente/Vista/listarClientes.php">Listar</a></td>
           </tr>
         </thead>
         <tbody>

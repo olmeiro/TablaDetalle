@@ -14,6 +14,7 @@ if(!(isset($_SESSION["NombreUsuario"]))) //si la sesión no existe redireccionar
   require_once('../../conexionProfe.php');
   require_once('../Modelo/Competencia.php'); //Vincular la clase competencia
   require_once('../Modelo/CrudCompetencia.php'); //Vincular la clase Crud
+  require_once('')
   // echo "Controlador";
 
   $Competencia = new Competencia();

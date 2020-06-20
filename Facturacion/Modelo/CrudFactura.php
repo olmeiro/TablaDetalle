@@ -9,7 +9,7 @@
 
       public function InsertarFactura($Factura) //Se recibe objeto Competencia
        {
-           $CodigoFactura = -1;
+           $CodigoFacturaGenerado = -1;
            $Db = Db::Conectar(); //Conectar a BBDD revisar conexion
            //Definir la insercion a realizar.
            $Insert = $Db->prepare('INSERT INTO facturas VALUES(NULL, :CodigoCliente, NOW())');
@@ -20,13 +20,13 @@
            try
            {
              $Insert->execute();//ejecutar el INSERT
-             echo "Registro exitoso factura";
+             //echo "Registro exitoso factura";
              $CodigoFacturaGenerado = $Db->lastInsertID(); //consultar el ultimo Id de la sesion generado
            }
            catch(Exception $e)
            {
              echo $e->getMessage();//Mostrar errores en la insercion.
-             die();
+             //die();
            }
            return $CodigoFacturaGenerado; //retornar el ultimo Id generado
        }
